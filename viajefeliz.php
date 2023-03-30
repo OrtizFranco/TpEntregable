@@ -23,14 +23,40 @@ Implementar un script testViaje.php que cree una instancia de la clase Viaje y p
     array_push($arrayPasajeros,$p1,$p2,$p3,$p4,$p5);
     return $arrayPasajeros;
  }
+
+ //inicializo variables
+
+
  //muestra el menu de opciones
  function cargarMenu(){
 echo "Bienvenid@!!!<\n>";
-echo "¿Qué desea realizar?<\n>";
-echo "Ingresar 1 para cargar información del viaje<\n>";
-echo "Ingresar 2 para modificar algún aspecto del viaje<\n>";
-echo "Ingrese 3 para ver algún aspecto del viaje<\n>";
+echo "¿Qué operación desea realizar?<\n>";
+echo "Crear 1 un nuevo viaje \n";
+echo "Ingresar 2 para cargar información de un viaje<\n>";
+echo "Ingresar 3 para modificar algún aspecto de un viaje<\n>";
+echo "Ingrese 4 para ver algún aspecto de un viaje<\n>";
  }
+  
+ //crear un objeto viaje
+function crearViaje(){
+    //inicializo variables
+    $arrayPsjs = [];
+    $arrayPsjs = cargarArray();
+    echo "Ingrese el código del viaje \n";
+    $cod=trim(fgets(STDIN));
+    echo "Ingrese el destino del viaje \n";
+    $destino=trim(fgets(STDIN));;
+    echo "Ingrese la cantidad máxima de pasajeros del viaje \n";
+    $cantMax=trim(fgets(STDIN));;
+    $v1 = new Viaje ($cod, $destino, $cantMax, $arrayPsjs);
+    nuevoViaje($v1);
+    return $v1;
+}
+function nuevoViaje($viaje){
+    $arregloViajes =[];
+    array_push($arregloViajes,$viaje); 
+}
+
  //modificar algun atributo del viaje, recibe objeto-Viaje. Retorna el obj modificado
  function modificarDatos($objV){
     echo "¿qué dato desea modificar?<\n>";
@@ -77,11 +103,11 @@ echo "Ingrese 3 para ver algún aspecto del viaje<\n>";
  }
 //permite ver algun atributo del viaje, recibe el objeto-Viaje por parametro
  function verDato($objV){
-    echo "¿qué dato desea ver?<\n>";
-    echo "Ingrese 1 para ver el código de viaje<\n>";
-    echo "Ingrese 2 para ver el destino<\n>";
-    echo "Ingrese 3 para ver la cantidad máxima de pasajeros del viaje<\n>";
-    echo "Ingrese 4 para ver los datos de los pasajeros<\n>";
+    echo "¿qué dato desea ver? \n";
+    echo "Ingrese 1 para ver el código del viaje \n";
+    echo "Ingrese 2 para ver el destino de un viaje\n";
+    echo "Ingrese 3 para ver la cantidad máxima de pasajeros del viaje \n";
+    echo "Ingrese 4 para ver los datos de los pasajeros \n";
     $eleccion = trim(fgets(STDIN));
     switch ($eleccion){
         case 1:
@@ -102,7 +128,7 @@ echo "Ingrese 3 para ver algún aspecto del viaje<\n>";
             break;
     }
  }
-
+ //Clase Viaje;
 class Viaje{
     private $codigo;
     private $destino;
@@ -142,16 +168,21 @@ class Viaje{
     public function setPasajeros($pasajero,$posicion){
         $this->pasajeros[$posicion] = $pasajero;
     }
+    //retorna el string a mostrar en __toString()
+    public function cargarString(){
+        $s = "codigo de viaje: ".$this->codigo."\n". " destino: ".$this->destino."\n". " cantidad máxima de pasajeros: ".$this->cant_Max_Pjs."\n";
+        $cant_P = count($this->pasajeros);
+        $p="";
+        for ($i=0;$i<$cant_P;$i++){
+            $p = $p. "pasajero ".$i+1 ." DNI: ".$this->pasajeros[$i]["DNI"]." nombre " .$this->pasajeros[$i]["nombre"]." ".$this->pasajeros[$i]["apellido"]."\n";
+        }
+        $s = $s.$p;
+        return $s;
+    }
     // al hacer echo muestra los atributos de la clase
     public function __toString(){
-        echo "codigo de viaje: ".$this->codigo."\n";
-        echo "destino: ".$this->destino."\n";
-        echo "cantidad máxima de pasajeros: ".$this->cant_Max_Pjs."\n";
-        $cant_P = count($this->pasajeros);
-        for ($i=0;$i<$cant_P;$i++){
-            echo "pasajero ".$i+1 ." ".$this->pasajeros[$i]["nombre"]." ".$this->pasajeros[$i]["apellido"]." DNI: ".$this->pasajeros[$i]["DNI"]."\n";
-        }
-        return "";
+        $string=$this->cargarString();
+        return $string;
     }
 
 }
