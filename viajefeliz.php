@@ -31,7 +31,7 @@ Implementar un script testViaje.php que cree una instancia de la clase Viaje y p
  function cargarMenu(){
 echo "Bienvenid@!!!<\n>";
 echo "¿Qué operación desea realizar?<\n>";
-echo "Crear 1 un nuevo viaje \n";
+echo "1 para crear un nuevo viaje \n";
 echo "Ingresar 2 para cargar información de un viaje<\n>";
 echo "Ingresar 3 para modificar algún aspecto de un viaje<\n>";
 echo "Ingrese 4 para ver algún aspecto de un viaje<\n>";
