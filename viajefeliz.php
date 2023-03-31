@@ -87,14 +87,30 @@ function crearViaje($viajes){
 
 
  //modificar algun atributo del viaje, recibe objeto-Viaje. Retorna el obj modificado
- function modificarDatos($objV){
-    echo "¿qué dato desea modificar?<\n>";
-    echo "Ingrese 1 para modificar el código de viaje<\n>";
-    echo "Ingrese 2 para modificar el destino<\n>";
-    echo "Ingrese 3 para modificar la cantidad máxima de pasajeros del viaje<\n>";
-    echo "Ingrese 4 para modificar los datos de algún pasajero<\n>";
-    $respuesta = trim(fgets(STDIN));
-    switch($respuesta){
+ function modificarDatos($viajes){
+    $arrayDeViajes = $viajes;
+    if (isset($viajes)){
+        for ($i=0;$i<count($arrayDeViajes);$i++){
+            $viaje=  $arrayDeViajes[$i];
+            $cod = $viaje->getCodigo();
+            $dest = $viaje->getDestino();
+            echo "Viaje n°".($i+1).": destino ".$dest." codigo: ".$cod." \n";
+        }
+        echo "Ingrese el número de viaje que desea ver \n";
+        $pos=trim(fgets(STDIN));
+        $pos=$pos-1;
+        while(!is_numeric($pos) || !esNumEntre($pos,0,(count($arrayDeViajes)-1))){
+            echo "ingrese un número de viaje válido";
+            $pos=trim(fgets(STDIN));
+        }
+        $objV = $arrayDeViajes[$pos];
+        echo "¿qué dato desea modificar?<\n>";
+        echo "Ingrese 1 para modificar el código de viaje<\n>";
+        echo "Ingrese 2 para modificar el destino<\n>";
+        echo "Ingrese 3 para modificar la cantidad máxima de pasajeros del viaje<\n>";
+        echo "Ingrese 4 para modificar los datos de algún pasajero<\n>";
+        $respuesta = trim(fgets(STDIN));
+        switch($respuesta){
         case 1:
             echo "Ingrese un nuevo código para el viaje<\n>";
             $mod = trim(fgets(STDIN));
@@ -128,7 +144,11 @@ function crearViaje($viajes){
                 }
             }
     }
-    return $objV;
+    $arrayDeViajes[$pos] = $objV;
+    return $arrayDeViajes;
+    }else{
+        echo "no existen viajes para modificar";
+    }
  }
  function esNumEntre($num,$min,$max){
     if ($num<=$max && $num>=$min){
@@ -139,8 +159,26 @@ function crearViaje($viajes){
     return $esNum;
  }
 //permite ver algun atributo del viaje, recibe el objeto-Viaje por parametro
- function verDato($objV){
-    echo "¿qué dato desea ver? \n";
+ function verDato($viajes){
+    $arrayDeViajes = $viajes;
+    if (isset($viajes)){
+        for ($i=0;$i<count($arrayDeViajes);$i++){
+            $viaje=  $arrayDeViajes[$i];
+            $cod = $viaje->getCodigo();
+            $dest = $viaje->getDestino();
+            echo "Viaje n°".($i+1).": destino ".$dest." codigo: ".$cod." \n";
+        }
+        echo "Ingrese el número de viaje que desea ver \n";
+        $pos=trim(fgets(STDIN));
+        $pos=$pos-1;
+        while(!is_numeric($pos) || !esNumEntre($pos,0,(count($arrayDeViajes)-1))){
+            echo "ingrese un número de viaje válido";
+            $pos=trim(fgets(STDIN));
+        }
+        $objV = $arrayDeViajes[$pos];
+    
+
+    echo "¿qué dato del viaje desea ver? \n";
     echo "Ingrese 1 para ver el código del viaje \n";
     echo "Ingrese 2 para ver el destino de un viaje\n";
     echo "Ingrese 3 para ver la cantidad máxima de pasajeros del viaje \n";
@@ -164,7 +202,7 @@ function crearViaje($viajes){
             }
             break;
     }
- }
+ }}
  //Clase Viaje;
 class Viaje{
     private $codigo;

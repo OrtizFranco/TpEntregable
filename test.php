@@ -17,14 +17,14 @@ do{
         $viajes=crearViaje($viajes);
         break;
     case 2:
-        //pido codigo del viaje a mostrar
+        //pido num del viaje a mostrar
         mostrarViajeCod($viajes);
         break;
     case 3:
-        $v1 = modificarDatos($v1);
+        $viajes = modificarDatos($viajes);
         break;
     case 4:
-        verDato($v1);
+        verDato($viajes);
         break;
 }}else{
     echo "Ingrese un numero entre 1 y 4 \n";
