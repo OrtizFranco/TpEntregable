@@ -3,15 +3,22 @@ include 'viajefeliz.php';
 
 
 //cargo el menu y obtengo la respuesta del usuario
+$viajes = [];
 do{
 cargarMenu();
-$seleccion = trim(fgets(STDIN));
-switch($seleccion){
+
+$min=1;
+$max=4;
+do{
+    $seleccion = trim(fgets(STDIN));
+    if (esNumEntre($seleccion,$min,$max)){
+    switch($seleccion){
     case 1:
-        $v1=crearViaje();
+        $viajes=crearViaje($viajes);
         break;
     case 2:
-        echo $v1;
+        //pido codigo del viaje a mostrar
+        mostrarViajeCod($viajes);
         break;
     case 3:
         $v1 = modificarDatos($v1);
@@ -19,10 +26,13 @@ switch($seleccion){
     case 4:
         verDato($v1);
         break;
+}}else{
+    echo "Ingrese un numero entre 1 y 4 \n";
+
 }
+}while(!esNumEntre($seleccion,$min,$max));
 echo "¿Desea realizar otra operación? S/N \n";
 $respuesta = trim(fgets(STDIN));
-
 }while($respuesta== "S" || $respuesta== "s");
 
 ?>

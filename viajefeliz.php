@@ -13,6 +13,9 @@ Implementar un script testViaje.php que cree una instancia de la clase Viaje y p
  un menú que permita cargar la información del viaje, modificar y ver sus datos.
 */
 //retorna el array de pasajeros
+
+  
+
  function cargarArray(){
     $arrayPasajeros = [];
     $p1 = ["nombre"=>"pepe", "apellido"=>"martinez","DNI"=>123456];
@@ -24,7 +27,28 @@ Implementar un script testViaje.php que cree una instancia de la clase Viaje y p
     return $arrayPasajeros;
  }
 
- //inicializo variables
+    function mostrarViajeCod($arrayDeViajes){
+        if (isset($arrayDeViajes)){
+        for ($i=0;$i<count($arrayDeViajes);$i++){
+            $viaje=  $arrayDeViajes[$i];
+            $cod = $viaje->getCodigo();
+            $dest = $viaje->getDestino();
+            echo "Viaje n°".($i+1).": destino ".$dest." codigo: ".$cod." \n";
+        }
+        
+        do{
+            echo "Ingrese el número de viaje que desea ver \n";
+            $cod=trim(fgets(STDIN));
+            $cod = $cod-1;
+        if (is_numeric($cod) || esNumEntre($cod,0,(count($arrayDeViajes)-1))){
+            echo $arrayDeViajes[$cod];
+        }else{
+            echo "Ingrese un numero entre 1 y ".count($arrayDeViajes);
+        }}while(!is_numeric($cod) || !esNumEntre($cod,0,(count($arrayDeViajes)-1)));
+     }else{
+        echo "No existe ningún viaje para mostrar";
+     }
+    }
 
 
  //muestra el menu de opciones
@@ -38,24 +62,29 @@ echo "Ingrese 4 para ver algún aspecto de un viaje<\n>";
  }
   
  //crear un objeto viaje
-function crearViaje(){
+function crearViaje($viajes){
     //inicializo variables
+    
+    $arrayDeViajes = $viajes;
     $arrayPsjs = [];
     $arrayPsjs = cargarArray();
+    if (isset($arrayDeViajes)){
+        $pos= count($arrayDeViajes);
+    }else{
+        $pos=0;
+    }
     echo "Ingrese el código del viaje \n";
     $cod=trim(fgets(STDIN));
     echo "Ingrese el destino del viaje \n";
-    $destino=trim(fgets(STDIN));;
+    $destino=trim(fgets(STDIN));
     echo "Ingrese la cantidad máxima de pasajeros del viaje \n";
-    $cantMax=trim(fgets(STDIN));;
+    $cantMax=trim(fgets(STDIN));
     $v1 = new Viaje ($cod, $destino, $cantMax, $arrayPsjs);
-    nuevoViaje($v1);
-    return $v1;
+    echo $pos;
+    $arrayDeViajes[$pos] = $v1;
+    return $arrayDeViajes;
 }
-function nuevoViaje($viaje){
-    $arregloViajes =[];
-    array_push($arregloViajes,$viaje); 
-}
+
 
  //modificar algun atributo del viaje, recibe objeto-Viaje. Retorna el obj modificado
  function modificarDatos($objV){
@@ -100,6 +129,14 @@ function nuevoViaje($viaje){
             }
     }
     return $objV;
+ }
+ function esNumEntre($num,$min,$max){
+    if ($num<=$max && $num>=$min){
+        $esNum=true;
+    }else{
+        $esNum=false;
+    }
+    return $esNum;
  }
 //permite ver algun atributo del viaje, recibe el objeto-Viaje por parametro
  function verDato($objV){
