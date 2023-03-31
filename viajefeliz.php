@@ -28,7 +28,8 @@ Implementar un script testViaje.php que cree una instancia de la clase Viaje y p
  }
 
     function mostrarViajeCod($arrayDeViajes){
-        if (isset($arrayDeViajes)){
+        $cant = count($arrayDeViajes);
+        if ($cant>0){
         for ($i=0;$i<count($arrayDeViajes);$i++){
             $viaje=  $arrayDeViajes[$i];
             $cod = $viaje->getCodigo();
@@ -46,7 +47,7 @@ Implementar un script testViaje.php que cree una instancia de la clase Viaje y p
             echo "Ingrese un numero entre 1 y ".count($arrayDeViajes);
         }}while(!is_numeric($cod) || !esNumEntre($cod,0,(count($arrayDeViajes)-1)));
      }else{
-        echo "No existe ningún viaje para mostrar";
+        echo "No existe ningún viaje para mostrar \n";
      }
     }
 
@@ -89,7 +90,8 @@ function crearViaje($viajes){
  //modificar algun atributo del viaje, recibe objeto-Viaje. Retorna el obj modificado
  function modificarDatos($viajes){
     $arrayDeViajes = $viajes;
-    if (isset($viajes)){
+    $cant = count($arrayDeViajes);
+        if ($cant>0){
         for ($i=0;$i<count($arrayDeViajes);$i++){
             $viaje=  $arrayDeViajes[$i];
             $cod = $viaje->getCodigo();
@@ -100,7 +102,7 @@ function crearViaje($viajes){
         $pos=trim(fgets(STDIN));
         $pos=$pos-1;
         while(!is_numeric($pos) || !esNumEntre($pos,0,(count($arrayDeViajes)-1))){
-            echo "ingrese un número de viaje válido";
+            echo "ingrese un número de viaje válido \n";
             $pos=trim(fgets(STDIN));
         }
         $objV = $arrayDeViajes[$pos];
@@ -147,7 +149,7 @@ function crearViaje($viajes){
     $arrayDeViajes[$pos] = $objV;
     return $arrayDeViajes;
     }else{
-        echo "no existen viajes para modificar";
+        echo "no existen viajes para modificar \n";
     }
  }
  function esNumEntre($num,$min,$max){
@@ -161,7 +163,8 @@ function crearViaje($viajes){
 //permite ver algun atributo del viaje, recibe el objeto-Viaje por parametro
  function verDato($viajes){
     $arrayDeViajes = $viajes;
-    if (isset($viajes)){
+    $cant = count($arrayDeViajes);
+    if ($cant>0){
         for ($i=0;$i<count($arrayDeViajes);$i++){
             $viaje=  $arrayDeViajes[$i];
             $cod = $viaje->getCodigo();
@@ -202,7 +205,10 @@ function crearViaje($viajes){
             }
             break;
     }
- }}
+ }else{
+    echo "no existen viajes para mostrar \n";
+ }
+}
  //Clase Viaje;
 class Viaje{
     private $codigo;
